@@ -138,7 +138,7 @@ export default async function IndustriDetailPage({ params }: { params: Promise<{
                   <div className="bg-slate-50 p-10 rounded-3xl border border-slate-200">
                      <h3 className="text-xl font-bold text-slate-900 mb-6">Cerita Sukses</h3>
                      <p className="text-slate-600 text-sm leading-relaxed mb-6 italic">
-                        "Berkat audit berkala dari SEO Checkup, website kami dalam industri {params.slug} berhasil naik dari halaman 5 ke halaman 1 Google hanya dalam waktu 3 bulan. Konversi naik hingga 150%!"
+                        "Berkat audit berkala dari SEO Checkup, website kami dalam industri {slug} berhasil naik dari halaman 5 ke halaman 1 Google hanya dalam waktu 3 bulan. Konversi naik hingga 150%!"
                      </p>
                      <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-blue-100 rounded-full"></div>
