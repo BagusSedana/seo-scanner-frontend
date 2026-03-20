@@ -1,10 +1,36 @@
 // src/app/kontak/page.tsx
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
-export default function KontakPage() {
+   const [form, setForm] = useState({ name: "", email: "", subject: "Dukungan Teknis", message: "" });
+   const [loading, setLoading] = useState(false);
+   const [submitted, setSubmitted] = useState(false);
+
+   const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+         const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               name: form.name,
+               email: form.email,
+               subject: form.subject,
+               category: "Kontak Umum",
+               message: form.message
+            }),
+         });
+         if (res.ok) setSubmitted(true);
+      } catch (err) {
+         console.error(err);
+      } finally {
+         setLoading(false);
+      }
+   };
+
    return (
       <div className="min-h-screen bg-slate-50 pt-32 pb-24">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,37 +87,54 @@ export default function KontakPage() {
 
                {/* Contact Form */}
                <div className="lg:col-span-2 bg-white p-10 rounded-3xl border border-slate-200 shadow-xl">
-                  <form className="space-y-6">
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                           <label className="text-sm font-bold text-slate-700">Nama Lengkap</label>
-                           <input type="text" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="Masukkan nama Anda" />
+                  {submitted ? (
+                     <div className="text-center py-16">
+                        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                           <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                           </svg>
                         </div>
-                        <div className="space-y-2">
-                           <label className="text-sm font-bold text-slate-700">Email Bisnis</label>
-                           <input type="email" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="anda@perusahaan.com" />
+                        <h2 className="text-2xl font-bold text-slate-900 mb-4">Pesan Anda Terkirim!</h2>
+                        <p className="text-slate-600 mb-8 max-w-sm mx-auto">
+                           Terima kasih telah menghubungi kami. Tim kami akan merespon email Anda secepatnya.
+                        </p>
+                        <button onClick={() => { setSubmitted(false); setForm({name: "", email: "", subject: "Dukungan Teknis", message: ""}); }} className="text-blue-600 font-bold hover:underline">
+                           Kirim pesan lain
+                        </button>
+                     </div>
+                  ) : (
+                     <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                           <div className="space-y-2">
+                              <label className="text-sm font-bold text-slate-700">Nama Lengkap</label>
+                              <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} type="text" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="Masukkan nama Anda" />
+                           </div>
+                           <div className="space-y-2">
+                              <label className="text-sm font-bold text-slate-700">Email Bisnis</label>
+                              <input required value={form.email} onChange={e => setForm({...form, email: e.target.value})} type="email" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="anda@perusahaan.com" />
+                           </div>
                         </div>
-                     </div>
-                     
-                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700">Subjek</label>
-                        <select className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none">
-                           <option>Dukungan Teknis</option>
-                           <option>Partnership & Kolaborasi</option>
-                           <option>Pertanyaan Penjualan</option>
-                           <option>Lainnya</option>
-                        </select>
-                     </div>
+                        
+                        <div className="space-y-2">
+                           <label className="text-sm font-bold text-slate-700">Subjek</label>
+                           <select value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none">
+                              <option value="Dukungan Teknis">Dukungan Teknis</option>
+                              <option value="Partnership & Kolaborasi">Partnership & Kolaborasi</option>
+                              <option value="Pertanyaan Penjualan">Pertanyaan Penjualan</option>
+                              <option value="Lainnya">Lainnya</option>
+                           </select>
+                        </div>
 
-                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700">Pesan</label>
-                        <textarea className="w-full px-4 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none h-40" placeholder="Apa yang bisa kami bantu?"></textarea>
-                     </div>
+                        <div className="space-y-2">
+                           <label className="text-sm font-bold text-slate-700">Pesan</label>
+                           <textarea required value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full px-4 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 transition-all outline-none h-40" placeholder="Apa yang bisa kami bantu?"></textarea>
+                        </div>
 
-                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 transition-all">
-                        Kirim Pesan
-                     </button>
-                  </form>
+                        <button disabled={loading} type="submit" className="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 transition-all">
+                           {loading ? "Mengirim..." : "Kirim Pesan"}
+                        </button>
+                     </form>
+                  )}
                </div>
             </div>
 

@@ -20,11 +20,30 @@ export default function SupportPage() {
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setLoading(true);
-      await new Promise((r) => setTimeout(r, 1200));
-      setTicketId(String(Math.floor(Math.random() * 90000) + 10000));
-      setLoading(false);
-      setSubmitted(true);
+      try {
+         const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+               name: form.name,
+               email: form.email,
+               subject: form.subject,
+               category: form.category,
+               message: form.message
+            }),
+         });
+         const data = await res.json();
+         if (res.ok) {
+            setTicketId(data.ticket_id || String(Math.floor(Math.random() * 90000) + 10000));
+            setSubmitted(true);
+         }
+      } catch (err) {
+         console.error(err);
+      } finally {
+         setLoading(false);
+      }
    };
+
 
    return (
       <div className="min-h-screen bg-gray-50">
