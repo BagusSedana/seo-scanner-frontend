@@ -78,8 +78,9 @@ const FEATURES_DETAIL: Record<string, any> = {
    }
 };
 
-export default function FiturDetailPage({ params }: { params: { slug: string } }) {
-   const feature = FEATURES_DETAIL[params.slug];
+export default async function FiturDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+   const { slug } = await params;
+   const feature = FEATURES_DETAIL[slug];
 
    if (!feature) {
       notFound();
@@ -94,7 +95,7 @@ export default function FiturDetailPage({ params }: { params: { slug: string } }
                   <span className="mx-2 text-slate-300">/</span>
                   <span className="text-slate-900">Fitur</span>
                   <span className="mx-2 text-slate-300">/</span>
-                  <span className="text-blue-600 font-bold capitalize">{params.slug.replace("-", " ")}</span>
+                  <span className="text-blue-600 font-bold capitalize">{slug.replace("-", " ")}</span>
                </nav>
                <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">{feature.title}</h1>
                <p className="text-xl text-blue-600 font-medium max-w-3xl leading-relaxed">{feature.tagline}</p>
@@ -152,7 +153,7 @@ export default function FiturDetailPage({ params }: { params: { slug: string } }
                      <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm transition-all hover:shadow-xl group">
                         <h4 className="text-lg font-bold text-slate-900 mb-6">Fitur Lainnya</h4>
                         <div className="space-y-4">
-                           {Object.keys(FEATURES_DETAIL).filter(k => k !== params.slug).map(key => (
+                           {Object.keys(FEATURES_DETAIL).filter(k => k !== slug).map(key => (
                               <Link key={key} href={`/fitur/${key}`} className="block p-4 rounded-xl hover:bg-slate-50 text-slate-600 hover:text-blue-600 font-medium text-sm border border-transparent hover:border-slate-100 transition-all">
                                  {FEATURES_DETAIL[key].title} 
                                  <span className="block text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-widest leading-none">Detail Fitur →</span>

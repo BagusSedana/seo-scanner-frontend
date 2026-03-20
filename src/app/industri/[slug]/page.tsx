@@ -94,8 +94,9 @@ const INDUSTRIES_DETAIL: Record<string, any> = {
    }
 };
 
-export default function IndustriDetailPage({ params }: { params: { slug: string } }) {
-   const industry = INDUSTRIES_DETAIL[params.slug];
+export default async function IndustriDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+   const { slug } = await params;
+   const industry = INDUSTRIES_DETAIL[slug];
 
    if (!industry) {
       notFound();
@@ -142,25 +143,25 @@ export default function IndustriDetailPage({ params }: { params: { slug: string 
                      <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-blue-100 rounded-full"></div>
                         <div>
-                           <div className="text-sm font-bold text-slate-900">Direktur Pemasaran</div>
-                           <div className="text-xs text-slate-500 capitalize">Startup {params.slug} Terkemuka</div>
-                        </div>
+                           <p className="text-sm font-bold text-slate-900">Direktur Pemasaran</p>
+                        <div className="text-xs text-slate-500 capitalize">Startup {slug} Terkemuka</div>
                      </div>
                   </div>
+               </div>
 
-                  <div className="bg-blue-600 p-10 rounded-3xl text-white">
-                     <h3 className="text-2xl font-bold mb-4">Siap untuk Ranking #1?</h3>
-                     <p className="text-blue-100 mb-8">Dapatkan laporan audit SEO gratis untuk website {params.slug} Anda hari ini.</p>
-                     <Link href="/register" className="block w-full text-center bg-white text-blue-600 font-bold py-4 rounded-xl hover:scale-105 transition-transform">Mulai Audit Gratis</Link>
-                  </div>
+               <div className="bg-blue-600 p-10 rounded-3xl text-white">
+                  <h3 className="text-2xl font-bold mb-4">Siap untuk Ranking #1?</h3>
+                  <p className="text-blue-100 mb-8">Dapatkan laporan audit SEO gratis untuk website {slug} Anda hari ini.</p>
+                  <Link href="/register" className="block w-full text-center bg-white text-blue-600 font-bold py-4 rounded-xl hover:scale-105 transition-transform">Mulai Audit Gratis</Link>
                </div>
             </div>
+         </div>
 
-            {/* Other Industries */}
-            <div className="mt-32 pt-24 border-t border-slate-200">
-               <h2 className="text-2xl font-bold text-slate-900 mb-10 text-center uppercase tracking-widest text-sm">Industri Lainnya</h2>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {Object.keys(INDUSTRIES_DETAIL).filter(k => k !== params.slug).map(key => (
+         {/* Other Industries */}
+         <div className="mt-32 pt-24 border-t border-slate-200">
+            <h2 className="text-2xl font-bold text-slate-900 mb-10 text-center uppercase tracking-widest text-sm">Industri Lainnya</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               {Object.keys(INDUSTRIES_DETAIL).filter(k => k !== slug).map(key => (
                      <Link key={key} href={`/industri/${key}`} className="p-6 bg-white border border-slate-200 rounded-2xl text-center hover:border-blue-600 hover:shadow-xl transition-all group">
                         <span className="block text-sm font-bold text-slate-700 group-hover:text-blue-600 capitalize">{key.replace("-", " ")}</span>
                      </Link>
