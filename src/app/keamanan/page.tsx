@@ -60,7 +60,7 @@ export default function KeamananPage() {
             <div className="mt-20 p-8 border-l-4 border-blue-600 bg-slate-50 rounded-r-2xl">
                <h4 className="font-bold text-slate-900 mb-2">Laporkan Masalah Keamanan</h4>
                <p className="text-sm text-slate-600 leading-relaxed">
-                  Jika Anda menemukan celah keamanan dalam sistem kami, kami sangat menghargai kontribusi Anda melalui program kependudukan bug kami. Silakan hubungi tim keamanan kami di <a href="mailto:security@seocheckup.id" className="text-blue-600 font-bold underline">security@seocheckup.id</a>.
+                  Jika Anda menemukan celah keamanan dalam sistem kami, kami sangat menghargai kontribusi Anda melalui program kependudukan bug kami. Silakan hubungi tim keamanan kami di <a href="mailto:gedebagussedanayoga28@gmail.com" className="text-blue-600 font-bold underline">gedebagussedanayoga28@gmail.com</a>.
                </p>
             </div>
          </div>

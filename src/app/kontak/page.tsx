@@ -28,7 +28,7 @@ export default function KontakPage() {
                      <p className="text-slate-600 mb-4 text-sm leading-relaxed">
                         Untuk pertanyaan umum dan dukungan pelanggan, kirimkan email kepada kami.
                      </p>
-                     <a href="mailto:support@seocheckup.id" className="text-blue-600 font-bold hover:underline">support@seocheckup.id</a>
+                     <a href="mailto:gedebagussedanayoga28@gmail.com" className="text-blue-600 font-bold hover:underline">gedebagussedanayoga28@gmail.com</a>
                   </div>
 
                   <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
@@ -41,7 +41,7 @@ export default function KontakPage() {
                      <p className="text-slate-600 mb-4 text-sm leading-relaxed">
                         Konsultasi cepat via WhatsApp tersedia selama jam kerja (09:00 - 18:00 WIB).
                      </p>
-                     <a href="https://wa.me/6281234567890" className="text-green-600 font-bold hover:underline">+62 812-3456-7890</a>
+                     <a href="https://wa.me/6287701785344" className="text-green-600 font-bold hover:underline">+62 877-0178-5344</a>
                   </div>
 
                   <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
@@ -53,8 +53,8 @@ export default function KontakPage() {
                      </div>
                      <h3 className="text-xl font-bold text-slate-900 mb-2">Kantor</h3>
                      <p className="text-slate-600 text-sm leading-relaxed">
-                        Digital Hub BSD City, <br />
-                        Tangerang, Banten, Indonesia.
+                        Badung, Kuta Selatan <br />
+                        Bali, Indonesia.
                      </p>
                   </div>
                </div>
