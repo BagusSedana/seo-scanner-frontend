@@ -172,9 +172,3 @@ export default async function IndustriDetailPage({ params }: { params: Promise<{
       </div>
    );
 }
-
-export async function generateStaticParams() {
-   return Object.keys(INDUSTRIES_DETAIL).map((slug) => ({
-      slug,
-   }));
-}

@@ -168,9 +168,3 @@ export default async function FiturDetailPage({ params }: { params: Promise<{ sl
       </div>
    );
 }
-
-export async function generateStaticParams() {
-   return Object.keys(FEATURES_DETAIL).map((slug) => ({
-      slug,
-   }));
-}
