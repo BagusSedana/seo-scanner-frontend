@@ -246,7 +246,15 @@ export default function PricingPage() {
          {/* Pricing Grid */}
          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
             <div className="grid md:grid-cols-3 gap-8 items-stretch max-w-5xl mx-auto">
-               {PLANS.map((plan) => (
+               {PLANS.map((plan) => {
+                  const isFree = plan.price.monthly === 0;
+                  const currentPrice = yearly ? plan.price.yearly : plan.price.monthly;
+                  const priceStr = currentPrice.toLocaleString('id-ID');
+                  const parts = priceStr.split('.');
+                  const hasThousandSuffix = parts.length > 1 && parts[parts.length - 1] === '000';
+                  const mainPart = hasThousandSuffix ? parts.slice(0, -1).join('.') : priceStr;
+
+                  return (
                    <div 
                      key={plan.name}
                      className={`rounded-[2rem] p-10 md:p-12 relative flex flex-col h-full border text-left bg-white transition-all
@@ -271,12 +279,21 @@ export default function PricingPage() {
                      </div>
 
                      <div className={`flex items-baseline justify-start gap-1 mb-8 border-b pb-8 border-slate-100 text-slate-900`}>
-                        <span className={`text-sm font-bold`}>{plan.price.monthly === 0 ? '' : 'Rp'}</span>
-                        <span className={`${plan.price.monthly === 0 ? 'text-6xl font-black' : 'text-5xl font-black'} tracking-tight`} style={{ letterSpacing: "-0.05em" }}>
-                           {plan.price.monthly === 0 ? 'Free' : `${(yearly ? plan.price.yearly : plan.price.monthly).toLocaleString('id-ID')}`}
-                        </span>
-                        {plan.price.monthly > 0 && (
-                           <span className={`text-xs font-bold text-slate-400`}>/{yearly ? 'thn' : 'bln'}</span>
+                        <span className={`text-sm font-bold`}>{isFree ? '' : 'Rp'}</span>
+                        {isFree ? (
+                           <span className="text-6xl font-black tracking-tight" style={{ letterSpacing: "-0.05em" }}>Free</span>
+                        ) : (
+                           <div className="flex items-baseline">
+                              <span className={`${mainPart.length >= 4 ? 'text-4xl font-black' : 'text-5xl font-black'} tracking-tight`} style={{ letterSpacing: "-0.05em" }}>
+                                 {mainPart}
+                              </span>
+                              {hasThousandSuffix && (
+                                 <span className="text-xl font-bold">.000</span>
+                              )}
+                           </div>
+                        )}
+                        {!isFree && (
+                           <span className={`text-xs font-bold text-slate-400 ml-1`}>/{yearly ? 'thn' : 'bln'}</span>
                         )}
                      </div>
                      
@@ -313,7 +330,8 @@ export default function PricingPage() {
                         {loading === plan.id ? 'Memproses...' : `Pilih Paket ${plan.name}`}
                      </button>
                   </div>
-               ))}
+                  );
+               })}
             </div>
          </section>
 
@@ -327,7 +345,7 @@ export default function PricingPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                {[
                   { title: "Top-Up Kuota Scan", desc: "Beli 5 kuota tambahan (Top-Up) kapan saja tanpa berlangganan.", price: "Rp25.000 / 5 Scan", id: "addon-5" },
-                  { title: "White-Label Report", desc: "Logo agensi kustom di PDF hasil export untuk ditunjukkan ke klien.", price: "Rp150.000 / Bln", id: "addon-wl" },
+                  { title: "Top-Up 50 Kuota", desc: "Dapatkan 50 kuota tambahan sekaligus dengan harga paket yang lebih hemat.", price: "Rp150.000 / 50 Scan", id: "addon-50" },
                   { title: "API Akses Data", desc: "Koneksi token REST API untuk menarik metrik hasil scan via web Anda.", price: "Hubungi Kami", id: "addon-api" },
                   { title: "Konsultasi Priority", desc: "Dukungan jalur khusus melalui WhatsApp untuk bahas audit eksklusif.", price: "Mulai Rp500.000", id: "addon-support" }
                ].map((addon, i) => (

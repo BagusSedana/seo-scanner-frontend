@@ -573,7 +573,7 @@ export default function SEOCheckupLandingPage() {
                      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                         {[
                            { title: "Top-Up Kuota Scan", desc: "Beli 5 kuota tambahan kapan saja tanpa batas waktu expired.", price: "Rp25.000 / 5 Scan", id: "addon-5" },
-                           { title: "White-Label Report", desc: "Logo agensi kustom di PDF hasil export untuk dikirim ke klien Anda.", price: "Rp150.000 / Bln", id: "addon-wl" },
+                           { title: "Top-Up 50 Kuota", desc: "Beli 50 kuota tambahan sekaligus dengan harga yang lebih hemat, tanpa batas waktu aktif.", price: "Rp150.000 / 50 Scan", id: "addon-50" },
                            { title: "API Akses Data", desc: "Koneksi token REST API untuk menarik metrik hasil scan via web Anda.", price: "Hubungi Kami", id: "addon-api" },
                            { title: "Konsultasi Priority", desc: "Dukungan jalur khusus melalui WhatsApp untuk optimasi manual.", price: "Mulai Rp500Rb", id: "addon-support" }
                         ].map((addon, i) => (
