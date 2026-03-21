@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+export default function KontakPage() {
    const [form, setForm] = useState({ name: "", email: "", subject: "Dukungan Teknis", message: "" });
    const [loading, setLoading] = useState(false);
    const [submitted, setSubmitted] = useState(false);
